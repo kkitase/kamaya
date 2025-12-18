@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kamaya Project
 
-## Getting Started
+**Kamaya Project** は、FoodHub Project が発行するニュースレター『かま屋通信』をデジタルアーカイブし、AI を活用して多角的に分析・コンテンツ展開するためのプラットフォームです。
 
-First, run the development server:
+PDF の収集・保存から、食材トレンドの可視化、さらにブログ・SNS・動画・ポッドキャストなどのマルチメディアコンテンツへの変換フローを支援します。
+
+---
+
+## 🚀 主な機能
+
+1.  **アーカイブ & 収集**
+    *   公式サイトからバックナンバーを自動スクレイピングし、PDF を一括ダウンロード。
+    *   `downloads/` ディレクトリにて、号ごとのアセット（PDF、画像、生成テキスト）を一元管理。
+
+2.  **AI 分析 (Powered by Gemini 2.0 Flash)**
+    *   PDF を解析し、**食材・料理・調理法・季節キーワード** を抽出。
+    *   出現頻度に基づいたランキングやトレンドを可視化。
+    *   CSV / JSON 形式でのデータエクスポートに対応。
+
+3.  **マルチメディア展開 (Content Repurposing)**
+    *   1つの記事から多様なフォーマットのコンテンツを生成・管理するためのディレクトリ構造を採用。
+    *   対応フォーマット: ブログ記事、X (Twitter) 投稿、動画プロンプト、ポッドキャスト台本など。
+
+---
+
+## 📂 ディレクトリ構造
+
+プロジェクトは、アプリケーションとコンテンツデータの 2 つの領域で構成されています。
+
+```
+kamaya/
+├── src/                # Next.js アプリケーション
+│   └── app/
+│       ├── page.tsx    # 分析ダッシュボード UI
+│       └── api/        # バックエンド API (Scrape, Analyze, etc.)
+│
+├── downloads/          # コンテンツアーカイブ (Git管理対象)
+│   ├── 『かま屋_通信』YYYY年MM月号.pdf  # 原本 PDF
+│   │
+│   └── kamaya-YYYY-MM/ # 号ごとの生成コンテンツパッケージ
+│       ├── 01_summary.md        # AIによる要約
+│       ├── 02_blog_draft.md     # ブログ記事ドラフト
+│       ├── 03_images/           # 記事から抽出・生成した画像
+│       ├── 04_x_posts.md        # SNS投稿案
+│       ├── 05_video_prompt.md   # 動画生成用プロンプト
+│       ├── 06_podcast_script.md # 音声コンテンツ台本
+│       └── README.md            # コンテンツ管理票
+│
+├── public/             # 静的アセット
+└── README.md           # 本ファイル
+```
+
+---
+
+## 🛠 技術スタック
+
+*   **Framework**: Next.js 16 (App Router)
+*   **Language**: TypeScript
+*   **Styling**: Tailwind CSS v4
+*   **AI Model**: Google Gemini 2.0 Flash (via Google Generative AI SDK)
+*   **Scraping**: Cheerio
+*   **PDF Processing**: PDF.js
+
+---
+
+## 🚦 セットアップと実行
+
+### 1. 依存関係のインストール
+
+```bash
+npm install
+```
+
+### 2. 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開き、アプリケーションにアクセスします。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Gemini API キーの準備
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+分析機能を使用するには、Google Gemini API キーが必要です。
+[Google AI Studio](https://aistudio.google.com/) からキーを取得し、画面上の入力フィールドに入力してください。（キーはブラウザ内にのみ保存され、サーバーには送信されません）
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 運用ワークフロー
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Step 1: 収集 (Collect)
+アプリの「記事を集める」および「PDFを手元に」機能を使い、最新の『かま屋通信』を `downloads/` フォルダに取り込みます。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Step 2: 分析 (Analyze)
+「分析を実行」ボタンで AI 解析を行います。食材の傾向や季節のトピックを把握し、レポート (JSON/CSV) を出力します。
 
-## Deploy on Vercel
+### Step 3: 展開 (Expand)
+分析結果や PDF の内容を元に、各号のディレクトリ（例: `kamaya-2025-12/`）を作成し、マルチメディアコンテンツを制作・格納します。
+*   **テキスト**: 要約、ブログ、SNS投稿文を作成。
+*   **画像**: 記事内の写真を切り出すか、AI でイメージ画像を生成して `03_images/` に格納。
+*   **音声/動画**: 台本やプロンプトを作成し、動画生成 AI や音声合成ツールへの入力として準備。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📜 ライセンス
+
+このプロジェクトのソースコードは MIT License の下で公開されています。
+『かま屋通信』のコンテンツ自体の著作権は株式会社フードハブ・プロジェクトに帰属します。

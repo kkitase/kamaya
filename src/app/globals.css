@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-text: #333333;
+  --color-bg: #FFFFFF;
+  --color-accent: #FFE600;
+  --color-subtle: #F5F5F5;
+  --color-border: #E5E5E5;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-noto-sans), sans-serif;
+  letter-spacing: 0.04em; /* 少し広げて読みやすく */
+  line-height: 1.8;
+}
+
+/* 明朝体クラス */
+.font-serif {
+  font-family: var(--font-shippori-mincho), serif;
+}
+
+/* アクセント下線（マーカー風） */
+.marker-yellow {
+  background: linear-gradient(transparent 60%, var(--color-accent) 60%);
+  display: inline;
+  padding: 0 4px;
+}
+
+/* ホバー時にマーカーを引くアニメーション */
+.hover-marker {
+  background: linear-gradient(transparent 60%, var(--color-accent) 60%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s ease;
+}
+
+.hover-marker:hover {
+  background-size: 100% 100%;
+}
+
+/* カスタムボタン */
+.btn-primary {
+  @apply relative overflow-hidden bg-[#333333] text-white px-8 py-3 rounded-none transition-all duration-300;
+}
+
+.btn-primary:hover {
+  @apply bg-[#FFE600] text-[#333333];
+}
+
+.btn-secondary {
+  @apply relative overflow-hidden border border-[#333333] text-[#333333] px-8 py-3 rounded-none transition-all duration-300;
+}
+
+.btn-secondary:hover {
+  @apply bg-[#F5F5F5];
+}
+
+/* カードスタイル（手触り感） */
+.card-paper {
+  @apply bg-white p-8 transition-all duration-500 relative;
+}
+
+/* リンク付きカードのホバー演出 */
+.card-link:hover .card-title {
+  @apply text-[#333333];
+  text-decoration-color: var(--color-accent);
+}
+
+/* 読み込みアニメーション */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0; /* 初期状態は非表示 */
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* プログレスバー */
+.progress-bar-container {
+  @apply w-full h-1 bg-[#E5E5E5] mt-4;
+}
+
+.progress-bar-fill {
+  @apply h-full bg-[#FFE600] transition-all duration-300;
 }
