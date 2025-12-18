@@ -12,7 +12,7 @@
     *   公式サイトから 99 号分以上のバックナンバーを自動スクレイピング。
     *   `downloads/` ディレクトリにて、号ごとのアセット（PDF、画像、生成テキスト）を一元管理。
 
-2.  **AI 分析 (Powered by Gemini 2.0 Flash)**
+2.  **AI 分析 (Powered by Gemini 3.0 Flash)**
     *   PDF を解析し、**食材・料理・調理法・季節キーワード** を抽出。
     *   出現頻度に基づいたランキングやトレンドを可視化。
     *   CSV / JSON 形式でのデータエクスポートに対応。
@@ -68,7 +68,7 @@ kamaya/
 *   **Framework**: Next.js 16 (App Router)
 *   **Language**: TypeScript
 *   **Styling**: Tailwind CSS v4
-*   **AI Model**: Google Gemini 2.0 Flash (via Google Generative AI SDK)
+*   **AI Model**: Google Gemini 3.0 Flash (via Google Generative AI SDK)
 *   **Scraping**: Cheerio
 *   **PDF Processing**: PDF.js
 
